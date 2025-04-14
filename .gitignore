@@ -12,3 +12,6 @@
 
 # Ignore all .png files
 *.png
+
+# Ignore all .exe files
+*.exe
