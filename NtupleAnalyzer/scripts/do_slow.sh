@@ -1,0 +1,23 @@
+#python3 FinalSelection_SlowData.py  Scouting_2024H_0
+#python3 FinalSelection_SlowData.py  Scouting_2024H_1
+#python3 FinalSelection_SlowData.py  Scouting_2024H_2
+#python3 FinalSelection_SlowData.py  Scouting_2024H_3
+#python3 FinalSelection_SlowData.py  Scouting_2024H_4
+#python3 FinalSelection_SlowData.py  Scouting_2024H_5
+#python3 FinalSelection_SlowData.py  Scouting_2024H_6
+#python3 FinalSelection_SlowData.py  Scouting_2024H_7
+#python3 FinalSelection_SlowData.py  Scouting_2024H_8
+#python3 FinalSelection_SlowData.py  Scouting_2024H_9
+#./RemoveDuplicate.exe slow_Scouting_2024H_0.root cleaned_slow_Scouting_2024H_0.root
+#./RemoveDuplicate.exe slow_Scouting_2024H_1.root cleaned_slow_Scouting_2024H_1.root
+#./RemoveDuplicate.exe slow_Scouting_2024H_2.root cleaned_slow_Scouting_2024H_2.root
+#./RemoveDuplicate.exe slow_Scouting_2024H_3.root cleaned_slow_Scouting_2024H_3.root
+#./RemoveDuplicate.exe slow_Scouting_2024H_4.root cleaned_slow_Scouting_2024H_4.root
+#./RemoveDuplicate.exe slow_Scouting_2024H_5.root cleaned_slow_Scouting_2024H_5.root
+#./RemoveDuplicate.exe slow_Scouting_2024H_6.root cleaned_slow_Scouting_2024H_6.root
+#./RemoveDuplicate.exe slow_Scouting_2024H_7.root cleaned_slow_Scouting_2024H_7.root
+#./RemoveDuplicate.exe slow_Scouting_2024H_8.root cleaned_slow_Scouting_2024H_8.root
+#./RemoveDuplicate.exe slow_Scouting_2024H_9.root cleaned_slow_Scouting_2024H_9.root
+#python3 $CMSSW_BASE/src/PhysicsTools/NanoAOD/scripts/haddnano.py slow_Scouting_2024H.root cleaned_slow_Scouting_2024H_*.root
+#python3 FinalSelection_SlowNoFilter.py  DY
+python3 FinalSelection_SlowNoFilter.py Jian_91188_45600

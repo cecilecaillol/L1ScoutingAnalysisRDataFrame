@@ -1,0 +1,8 @@
+# Ignore all .root files
+*.root
+
+# Ignore all .csv files
+*.csv
+
+# Ignore all .txt files
+*.txt
