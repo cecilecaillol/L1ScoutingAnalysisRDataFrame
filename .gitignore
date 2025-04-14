@@ -6,3 +6,9 @@
 
 # Ignore all .txt files
 *.txt
+
+# Ignore all .pdf files
+*.pdf
+
+# Ignore all .png files
+*.png
