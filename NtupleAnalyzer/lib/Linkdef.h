@@ -13,10 +13,15 @@
 #pragma link C++ function GetIndex_nostub;
 #pragma link C++ function GetIndex;
 #pragma link C++ function GetLepVector;
+#pragma link C++ function GetIndex_nostub_hwK;
+#pragma link C++ function GetLepVector_hwK;
 #pragma link C++ function GetBxSpread;
 #pragma link C++ function GetFirstBx;
 #pragma link C++ function GetStationSpread;
 #pragma link C++ function GetNstub;
 #pragma link C++ function IsL1MuMatched;
 #pragma link C++ function GetMET;
+#pragma link C++ function IsColliding;
+#pragma link C++ function IsEarlierColliding;
+#pragma link C++ function Get_newpt;
 #endif

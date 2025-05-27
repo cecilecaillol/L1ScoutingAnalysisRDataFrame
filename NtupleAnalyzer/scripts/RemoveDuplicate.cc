@@ -36,8 +36,9 @@ int main(int argc, char** argv) {
     unsigned int prev_bunchCrossing = 0;
     unsigned int prev_orbitNumber = 0;
     float prev_eta1 = 100;
-    int max_value = 0;
-    Long64_t max_entry = -1;
+    int best_nstub = 0;
+    int best_bxspread = 0;
+    Long64_t best_entry = -1;
 
     // Loop over entries
     Long64_t nentries = oldTree->GetEntries();
@@ -49,20 +50,22 @@ int main(int argc, char** argv) {
        bool is_same_track = (run==prev_run and luminosityBlock==prev_luminosityBlock and orbitNumber==prev_orbitNumber and fabs(bunchCrossing-prev_bunchCrossing)<5 and fabs(eta1-prev_eta1)<0.1);
        if (i == 0 || !is_same_track) {
             // If it's a new group, process the previous one
-            if (i > 0 && max_entry >= 0) {
-                oldTree->GetEntry(max_entry);
+            if (i > 0 && best_entry >= 0) {
+                oldTree->GetEntry(best_entry);
                 newTree->Fill();
 		oldTree->GetEntry(i);
             }
 
             // Start a new group
-            max_value = nstub1;
-            max_entry = i;
+            best_nstub = nstub1;
+	    best_bxspread = bxspread1;
+            best_entry = i;
         } else {
             // If still in the same group, update the max if needed
-            if (nstub1 > max_value) {
-                max_value = nstub1;
-                max_entry = i;
+            if (bxspread1>best_bxspread or (bxspread1==best_bxspread and nstub1 > best_nstub)) {
+                best_nstub = nstub1;
+		best_bxspread = bxspread1;
+                best_entry = i;
             }
         }
 
@@ -74,8 +77,8 @@ int main(int argc, char** argv) {
     }
 
     // Handle last group
-    if (max_entry >= 0) {
-        oldTree->GetEntry(max_entry);
+    if (best_entry >= 0) {
+        oldTree->GetEntry(best_entry);
         newTree->Fill();
     }
 

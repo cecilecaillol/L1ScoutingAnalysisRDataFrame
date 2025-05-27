@@ -45,9 +45,9 @@ print ("Before selection total entries", nentries)
 
 df = df.Filter("nL1KBMTFSkimmed>1")
 
-df_var=df.Define("idx1","GetIndex_nostub(1,nL1KBMTFSkimmed, L1KBMTFSkimmed_pt, L1KBMTFSkimmed_eta, L1KBMTFSkimmed_phi)").Define("idx2","GetIndex_nostub(2,nL1KBMTFSkimmed, L1KBMTFSkimmed_pt, L1KBMTFSkimmed_eta, L1KBMTFSkimmed_phi)")
+df_var=df.Define("idx1","GetIndex_nostub_hwK(1,nL1KBMTFSkimmed, L1KBMTFSkimmed_pt, L1KBMTFSkimmed_eta, L1KBMTFSkimmed_phi, L1KBMTFSkimmed_hwK)").Define("idx2","GetIndex_nostub_hwK(2,nL1KBMTFSkimmed, L1KBMTFSkimmed_pt, L1KBMTFSkimmed_eta, L1KBMTFSkimmed_phi, L1KBMTFSkimmed_hwK)")
 
-df_var=df_var.Define("my_mu1","GetLepVector(idx1,L1KBMTFSkimmed_pt,L1KBMTFSkimmed_eta,L1KBMTFSkimmed_phi)").Define("my_mu2","GetLepVector(idx2,L1KBMTFSkimmed_pt,L1KBMTFSkimmed_eta,L1KBMTFSkimmed_phi)").Define("isOS","L1KBMTFSkimmed_hwCharge[idx1]*L1KBMTFSkimmed_hwCharge[idx2]<0")
+df_var=df_var.Define("my_mu1","GetLepVector_hwK(idx1,L1KBMTFSkimmed_eta,L1KBMTFSkimmed_phi,L1KBMTFSkimmed_hwK)").Define("my_mu2","GetLepVector_hwK(idx2,L1KBMTFSkimmed_eta,L1KBMTFSkimmed_phi,L1KBMTFSkimmed_hwK)").Define("isOS","L1KBMTFSkimmed_hwCharge[idx1]*L1KBMTFSkimmed_hwCharge[idx2]<0")
 
 df_var = df_var.Filter("idx1!=idx2 && my_mu1.Pt()>8 && my_mu2.Pt()>8 && fabs(my_mu1.Eta())<0.83 && fabs(my_mu2.Eta())<0.83")
 
@@ -73,10 +73,17 @@ if (isdata):
 else:
     df = df.Define("met","L1MET_pt[0]")
 
+if isdata:
+   df = df.Define("is_colliding", "IsColliding(run,bunchCrossing)")
+   df = df.Define("is_earlier_colliding", "IsEarlierColliding(run,bunchCrossing,1,is_colliding)")
+else:
+   df = df.Define("is_colliding", "true").Define("is_earlier_colliding", "true")
+
+
 
 columns = ROOT.std.vector("string")()
 for c in ("run", "luminosityBlock", "bunchCrossing", "orbitNumber", \
-        "mmumu", "isOS", "DRmumu", "xsweight", "met", \
+        "mmumu", "isOS", "DRmumu", "xsweight", "met", "is_colliding", "is_earlier_colliding", \
         "bxspread1", "bxspread2", "isL1MuMatched1", "isL1MuMatched2", "nstub1", "nstub2",\
         "pt1","eta1","phi1","charge1","qual1","dxy1","pt2","eta2","phi2","charge2","qual2","dxy2"):
     columns.push_back(c)

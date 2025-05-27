@@ -102,7 +102,7 @@ int main(int argc, char** argv) {
     TH1F* h_met_OS=new TH1F("h_met_OS", "h_met_OS", 20,0,100); h_met_OS->Sumw2();
     TH1F* h_met_SS=new TH1F("h_met_SS", "h_met_SS", 20,0,100); h_met_SS->Sumw2();
 
-    float lumiweight= (37770.0/15.046) + (5440.0/15.060) + (11470.0/15.048);
+    float lumiweight= (40400.0/15.046) + (5820.0/15.060) + (12320.0/15.048);
 
     static TRandom3 randGen(1234);
 
@@ -127,14 +127,14 @@ int main(int argc, char** argv) {
 
 	
 	// Muon energy calibration
-	if (name=="data_obs"){
-	   pt1=0.84*pt1;
-	   pt2=0.84*pt2;
+	/*if (name=="data_obs"){
+	   pt1=0.83*pt1;
+	   pt2=0.83*pt2;
 	}
 	else{
-	   pt1=0.84*pt1;
-           pt2=0.84*pt2;
-        }
+	   pt1=0.83*pt1;
+           pt2=0.83*pt2;
+        }*/
 
 	// Muon energy resolution
         double smearFactor1 = randGen.Gaus(1.0, 0.11);
@@ -145,8 +145,14 @@ int main(int argc, char** argv) {
 	}
 
 	// Muon reconstruction efficiency
-	float musf=0.98;
-	aweight = aweight*musf*musf;
+	//float musf=1.00;
+	//aweight = aweight*musf*musf;
+	if (nstub1==2) aweight = aweight*1.03;
+	else if (nstub1==3) aweight = aweight*1.02;
+	else if (nstub1==4) aweight = aweight*0.83;
+	if (nstub2==2) aweight = aweight*1.03;
+        else if (nstub2==3) aweight = aweight*1.02;
+        else if (nstub2==4) aweight = aweight*0.83;
 	
 	
 
@@ -155,7 +161,17 @@ int main(int argc, char** argv) {
 
 	if (dxy1>0 or dxy2>0) continue;
 	if (pt1<15 or pt2<15) continue;
+	//if (pt1<100 or pt2<100) continue;
 	if (qual1<12 or qual2<12) continue;
+
+	if (nstub1==4 and qual1<14) continue;
+	if (nstub1==3 and qual1<13) continue;
+	if (nstub1==2 and qual1<12) continue;
+	if (nstub2==4 and qual2<14) continue;
+        if (nstub2==3 and qual2<13) continue;
+        if (nstub2==2 and qual2<12) continue;
+
+	//if (nstub1!=2 or nstub2!=2) continue;
 
 	if (name=="data_obs") aweight=1.0;
 

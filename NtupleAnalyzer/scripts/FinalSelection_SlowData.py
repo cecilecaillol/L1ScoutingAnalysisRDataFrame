@@ -44,7 +44,7 @@ print ("Before selection total entries", nentries)
 
 df = df.Filter("nL1KBMTFSkimmed>0")
 
-df = df.Define("idx1", "GetIndex(1, nL1KBMTFSkimmed, L1KBMTFSkimmed_pt, L1KBMTFSkimmed_eta, L1KBMTFSkimmed_phi, L1KBMTFSkimmed_nStub)").Define("idx2", "GetIndex(2, nL1KBMTFSkimmed, L1KBMTFSkimmed_pt, L1KBMTFSkimmed_eta, L1KBMTFSkimmed_phi, L1KBMTFSkimmed_nStub)")
+df = df.Define("idx1", "GetIndex(1, nL1KBMTFSkimmed, L1KBMTFSkimmed_pt, L1KBMTFSkimmed_eta, L1KBMTFSkimmed_phi, L1KBMTFSkimmed_nStub, L1KBMTFSkimmed_s1Bx, L1KBMTFSkimmed_s2Bx, L1KBMTFSkimmed_s3Bx, L1KBMTFSkimmed_s4Bx, L1KBMTFSkimmed_hwK)").Define("idx2", "GetIndex(2, nL1KBMTFSkimmed, L1KBMTFSkimmed_pt, L1KBMTFSkimmed_eta, L1KBMTFSkimmed_phi, L1KBMTFSkimmed_nStub, L1KBMTFSkimmed_s1Bx, L1KBMTFSkimmed_s2Bx, L1KBMTFSkimmed_s3Bx, L1KBMTFSkimmed_s4Bx, L1KBMTFSkimmed_hwK)")
 
 #df = df.Define("nstub1", "GetNstub(nL1KBMTFSkimmed, idx1, L1KBMTFSkimmed_nStub)").Define("nstub2", "GetNstub(nL1KBMTFSkimmed, idx2, L1KBMTFSkimmed_nStub)")
 df = df.Define("nstub1","L1KBMTFSkimmed_nStub[idx1]").Define("nstub2","L1KBMTFSkimmed_nStub[idx2]") 
@@ -59,7 +59,7 @@ df = df.Define("bxspread1", "GetBxSpread(nL1KBMTFSkimmed, idx1, L1KBMTFSkimmed_n
        .Define("stationspread2", "GetStationSpread(nL1KBMTFSkimmed, idx2, L1KBMTFSkimmed_nStub, L1KBMTFSkimmed_s1Station, L1KBMTFSkimmed_s2Station, L1KBMTFSkimmed_s3Station, L1KBMTFSkimmed_s4Station)") \
        .Define("firstbx1", "GetFirstBx(nL1KBMTFSkimmed, idx1, L1KBMTFSkimmed_nStub, L1KBMTFSkimmed_s1Bx, L1KBMTFSkimmed_s2Bx, L1KBMTFSkimmed_s3Bx, L1KBMTFSkimmed_s4Bx)") \
        .Define("firstbx2", "GetFirstBx(nL1KBMTFSkimmed, idx2, L1KBMTFSkimmed_nStub, L1KBMTFSkimmed_s1Bx, L1KBMTFSkimmed_s2Bx, L1KBMTFSkimmed_s3Bx, L1KBMTFSkimmed_s4Bx)") \
-       .Define("pt1","L1KBMTFSkimmed_pt[idx1]").Define("pt2","L1KBMTFSkimmed_pt[idx2]") \
+       .Define("pt1","Get_newpt(L1KBMTFSkimmed_hwK[idx1])").Define("pt2","Get_newpt(L1KBMTFSkimmed_hwK[idx2])") \
        .Define("eta1","L1KBMTFSkimmed_eta[idx1]").Define("eta2","L1KBMTFSkimmed_eta[idx2]") \
        .Define("phi1","L1KBMTFSkimmed_phi[idx1]").Define("phi2","L1KBMTFSkimmed_phi[idx2]") \
        .Define("dxy1","L1KBMTFSkimmed_hwDXY[idx1]").Define("dxy2","L1KBMTFSkimmed_hwDXY[idx2]") \
@@ -84,8 +84,12 @@ df = df.Define("bxspread1", "GetBxSpread(nL1KBMTFSkimmed, idx1, L1KBMTFSkimmed_n
 
 df = df.Filter("(bxspread1>0 or pt1>500) || (bxspread2>0 || pt2>500)")
 
+df = df.Define("is_colliding", "IsColliding(run,firstbx1)")
+
+df = df.Define("is_earlier_colliding", "IsEarlierColliding(run,firstbx1,4,is_colliding)")
+
 columns = ROOT.std.vector("string")()
-for c in ("run", "luminosityBlock", "bunchCrossing", "orbitNumber", \
+for c in ("run", "luminosityBlock", "bunchCrossing", "orbitNumber", "is_colliding", "is_earlier_colliding", \
         #"nL1KBMTFSkimmed", "L1KBMTFSkimmed_hwCharge", "L1KBMTFSkimmed_hwQual", \
         "idx1", "idx2", \
         "bxspread1", "bxspread2", "stationspread1", "stationspread2", "nstub1", "nstub2", "isL1MuMatched1", "isL1MuMatched2", \

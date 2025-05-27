@@ -1,4 +1,6 @@
 #include "basic_sel.h"
+#include "scheme_run_map.h"
+#include "scheme_bx_map.h"
 
 int GetIndex_nostub(int rank, int ncand, ROOT::VecOps::RVec<Float_t> &LepCand_pt, ROOT::VecOps::RVec<Float_t> &LepCand_eta, ROOT::VecOps::RVec<Float_t> &LepCand_phi){
         int idxK1=99; int idxK2=99;
@@ -30,8 +32,53 @@ int GetIndex_nostub(int rank, int ncand, ROOT::VecOps::RVec<Float_t> &LepCand_pt
         else return 0;
 }
 
-int GetIndex(int rank, int ncand, ROOT::VecOps::RVec<Float_t> &LepCand_pt, ROOT::VecOps::RVec<Float_t> &LepCand_eta, ROOT::VecOps::RVec<Float_t> &LepCand_phi, ROOT::VecOps::RVec<Short_t> &nstub){
+int GetIndex(int rank, int ncand, ROOT::VecOps::RVec<Float_t> &LepCand_pt, ROOT::VecOps::RVec<Float_t> &LepCand_eta, ROOT::VecOps::RVec<Float_t> &LepCand_phi, ROOT::VecOps::RVec<Short_t> &nstub, ROOT::VecOps::RVec<Short_t> &bx1, ROOT::VecOps::RVec<Short_t> &bx2, ROOT::VecOps::RVec<Short_t> &bx3, ROOT::VecOps::RVec<Short_t> &bx4, ROOT::VecOps::RVec<Short_t> &LepCand_hwK){
+
 	int idxK1=99; int idxK2=99;
+	int best_bxspread=0;
+	int best_nstubs=0;
+	float best_pt=0;
+
+        if (ncand==1) idxK1=0;
+        else if (ncand>1){
+	   for (int k=0; k<ncand; ++k){
+	      int tmp_bxspread=GetBxSpread(ncand, k, nstub, bx1, bx2, bx3, bx4);
+	      int tmp_nstubs=nstub[k];
+	      int tmp_pt=Get_newpt(LepCand_hwK[k]);
+	      if (tmp_bxspread>best_bxspread or (tmp_bxspread==best_bxspread and tmp_nstubs>best_nstubs) or (tmp_bxspread==best_bxspread and tmp_nstubs==best_nstubs and tmp_pt>best_pt)){
+	         idxK1=k;
+		 best_bxspread=tmp_bxspread;
+		 best_nstubs=tmp_nstubs;
+		 best_pt=tmp_pt;
+	      }
+	   }
+	   TLorentzVector my_mu1; my_mu1.SetPtEtaPhiM(Get_newpt(LepCand_hwK[idxK1]), LepCand_eta[idxK1], LepCand_phi[idxK1],0.105);
+
+	   best_bxspread=0;
+           best_nstubs=0;
+           best_pt=0;
+	   TLorentzVector tmp_mu;
+	   for (int k=0; k<ncand; ++k){
+	      tmp_mu.SetPtEtaPhiM(Get_newpt(LepCand_hwK[k]), LepCand_eta[k], LepCand_phi[k],0.105);
+	      if (tmp_mu.DeltaR(my_mu1)>0.10){
+                 int tmp_bxspread=GetBxSpread(ncand, k, nstub, bx1, bx2, bx3, bx4);
+                 int tmp_nstubs=nstub[k];
+                 int tmp_pt=Get_newpt(LepCand_hwK[k]);
+                 if (tmp_bxspread>best_bxspread or (tmp_bxspread==best_bxspread and tmp_nstubs>best_nstubs) or (tmp_bxspread==best_bxspread and tmp_nstubs==best_nstubs and tmp_pt>best_pt)){
+                    idxK2=k;
+                    best_bxspread=tmp_bxspread;
+                    best_nstubs=tmp_nstubs;
+                    best_pt=tmp_pt;
+                 }
+              }
+	   }
+	}
+
+	if (rank==1) return idxK1;
+        else if (rank==2) return idxK2;
+        else return 0;
+
+	/*int idxK1=99; int idxK2=99;
 	TLorentzVector my_mu1; my_mu1.SetPtEtaPhiM(0.,0.,0.,0.);
         TLorentzVector my_mu2; my_mu2.SetPtEtaPhiM(0.,0.,0.,0.);
         TLorentzVector tmp_mu;
@@ -80,13 +127,48 @@ int GetIndex(int rank, int ncand, ROOT::VecOps::RVec<Float_t> &LepCand_pt, ROOT:
         }
 	if (rank==1) return idxK1;
         else if (rank==2) return idxK2;
-        else return 0;
+        else return 0;*/
 }
 
+int GetIndex_nostub_hwK(int rank, int ncand, ROOT::VecOps::RVec<Float_t> &LepCand_pt, ROOT::VecOps::RVec<Float_t> &LepCand_eta, ROOT::VecOps::RVec<Float_t> &LepCand_phi, ROOT::VecOps::RVec<Short_t> &LepCand_hwK){
+        int idxK1=99; int idxK2=99;
+        TLorentzVector my_mu1; my_mu1.SetPtEtaPhiM(0.,0.,0.,0.);
+        TLorentzVector my_mu2; my_mu2.SetPtEtaPhiM(0.,0.,0.,0.);
+        TLorentzVector tmp_mu;
+        if (ncand==1) idxK1=0;
+        else if (ncand>1){
+           float mu1pt=0.; float mu2pt=0.;
+           for (int k=0; k<ncand; ++k){
+              tmp_mu.SetPtEtaPhiM(Get_newpt(LepCand_hwK[k]), LepCand_eta[k], LepCand_phi[k],0.105);
+              if (Get_newpt(LepCand_hwK[k])>mu1pt) {
+                 if (mu1pt>0 and my_mu1.DeltaR(tmp_mu)>0.30){
+                    my_mu2=my_mu1; mu2pt=mu1pt; idxK2 = idxK1;
+                 }
+                 my_mu1=tmp_mu;
+                 idxK1=k;
+                 mu1pt=Get_newpt(LepCand_hwK[k]);
+              }
+              else if (my_mu1.DeltaR(tmp_mu)>0.30 and Get_newpt(LepCand_hwK[k])>mu2pt) {
+                 my_mu2=tmp_mu;
+                 idxK2=k;
+                 mu2pt=Get_newpt(LepCand_hwK[k]);
+              }
+           }
+        }
+        if (rank==1) return idxK1;
+        else if (rank==2) return idxK2;
+        else return 0;
+}
 
 TLorentzVector GetLepVector(int index, ROOT::VecOps::RVec<Float_t> &LepCand_pt, ROOT::VecOps::RVec<Float_t> &LepCand_eta,ROOT::VecOps::RVec<Float_t> &LepCand_phi){
     TLorentzVector my_lep;
     if (index<99) my_lep.SetPtEtaPhiM(LepCand_pt[index],LepCand_eta[index],LepCand_phi[index],0.105);
+    return my_lep;
+}
+
+TLorentzVector GetLepVector_hwK(int index, ROOT::VecOps::RVec<Float_t> &LepCand_eta,ROOT::VecOps::RVec<Float_t> &LepCand_phi, ROOT::VecOps::RVec<Short_t> &LepCand_hwK){
+    TLorentzVector my_lep;
+    if (index<99) my_lep.SetPtEtaPhiM(Get_newpt(LepCand_hwK[index]),LepCand_eta[index],LepCand_phi[index],0.105);
     return my_lep;
 }
 
@@ -212,3 +294,70 @@ float GetMET(int diff, int firstbx, int track_bx, float met0, float metm1, float
   }
   return out_met;
 }
+
+bool IsColliding(int run, int bx){
+    auto schemeIt = runToScheme.find(run);
+    if (schemeIt == runToScheme.end()) {
+        //std::cerr << "Unknown run number: " << runNumber << std::endl;
+        //continue;
+	return false;
+    }
+
+    const std::string &scheme = schemeIt->second;
+    const std::vector<int> &bxList = schemeToBX[scheme];
+
+    // Efficient check using binary search if bxList is sorted
+    bool found = std::binary_search(bxList.begin(), bxList.end(), bx);
+    return found;
+}
+
+bool IsEarlierColliding(int run, int bx, int interval, bool is_colliding){
+   if (is_colliding) return true;
+   else{
+      auto schemeIt = runToScheme.find(run);
+      if (schemeIt == runToScheme.end()) {
+        return false;
+      }
+
+      const std::string &scheme = schemeIt->second;
+      const std::vector<int> &bxList = schemeToBX[scheme];
+
+      bool collides=false;
+      bool found=false;
+
+      for (int i=0; i<interval; ++i){
+         found = std::binary_search(bxList.begin(), bxList.end(), bx-1-i);
+	 if (found) collides=true; // if any of the previous is colliding, tag as colliding
+      }
+
+      return collides;
+   }
+}
+
+float Get_newpt(int oldK){
+  float K = oldK-9;
+  if (K==0) K=1;
+  float lsb = 1.25 / float(1 << 13);
+  float FK = abs(K);
+
+  if (FK > 2047)
+    FK = 2047.;
+
+  FK = FK * lsb;
+
+  //step 1 -material and B-field
+  FK = .8569 * FK / (1.0 + 0.1144 * FK);
+
+  float pt = 0;
+  if (FK != 0)
+    pt = float(2.0 / FK);
+
+  if (pt > 2000)
+    pt = 2000;
+
+  if (pt < 8)
+    pt = 8;
+
+  return pt/2;
+}
+

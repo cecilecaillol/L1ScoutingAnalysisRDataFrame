@@ -83,14 +83,17 @@ if args.selection=="ZmumuKBMTF":
     name=["mmumu","met","nstub"]
     xaxis=["m_{#mu#mu} (GeV)","MET (GeV)","N(stub)"]
 
+sf=1.0
 for k in range(0,len(dirOS)):
    Data=myfile.Get(dirOS[k]).Get("data_obs").Clone()
    DY=myfile.Get(dirOS[k]).Get("DY").Clone()
    Fake=myfile.Get(dirOS[k]).Get("Fake").Clone()
-   #DY.Scale(15.0/20)
    
-   if k==0: sf=(Data.GetBinContent(1)-DY.GetBinContent(1))/(Fake.GetBinContent(1))
-   print(sf)
+   if k==0 and Fake.GetBinContent(1)>0: 
+       sf=(Data.GetBinContent(1)-DY.GetBinContent(1))/(Fake.GetBinContent(1))
+       print(sf)
+       #Fake.Scale(sf)
+       print((Data.Integral()-Fake.Integral())/DY.Integral())
    Fake.Scale(sf)
    print((Data.Integral()-Fake.Integral())/DY.Integral())
    
@@ -105,6 +108,10 @@ for k in range(0,len(dirOS)):
    Data.SetTitle("")
    Data.GetYaxis().SetTitle("Events")
    Data.SetMinimum(0.1)
+
+   #print((Data.GetBinContent(1)-Fake.GetBinContent(1))/DY.GetBinContent(1))
+   #print((Data.GetBinContent(2)-Fake.GetBinContent(2))/DY.GetBinContent(2))
+   #print((Data.GetBinContent(3)-Fake.GetBinContent(3))/DY.GetBinContent(3))
    
    
    DY.SetFillColor(ROOT.TColor.GetColor("#5790fc"))

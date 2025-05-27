@@ -57,8 +57,14 @@ df_var = df_var.Define("mmumu","(my_mu1+my_mu2).M()").Define("DRmumu","my_mu1.De
 
 df = df_var.Filter("mmumu>50 && DRmumu>0.3").Define("xsweight","{}".format(weight))
 
+if isdata: 
+   df = df.Define("is_colliding", "IsColliding(run,bunchCrossing)")
+   df = df.Define("is_earlier_colliding", "IsEarlierColliding(run,bunchCrossing,1,is_colliding)")
+else:
+   df = df.Define("is_colliding", "true").Define("is_earlier_colliding", "true")
+
 columns = ROOT.std.vector("string")()
-for c in ("run", "luminosityBlock", "bunchCrossing", "orbitNumber", "xsweight", \
+for c in ("run", "luminosityBlock", "bunchCrossing", "orbitNumber", "xsweight", "is_colliding", "is_earlier_colliding", \
         "pt1","eta1","phi1","charge1","qual1","dxy1","pt2","eta2","phi2","charge2","qual2","dxy2", \
         "mmumu", "isOS", "DRmumu"):
     columns.push_back(c)

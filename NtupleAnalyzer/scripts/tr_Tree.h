@@ -1,12 +1,16 @@
+   unsigned int bunchCrossing;
    Int_t           nL1KBMTFSkimmed;
    Short_t         L1KBMTFSkimmed_hwCharge[5];   //[nL1KBMTFSkimmed]
    Short_t         L1KBMTFSkimmed_hwQual[5];   //[nL1KBMTFSkimmed]
+   Bool_t           is_earlier_colliding;
+   Bool_t           is_colliding;
    Int_t           firstbx1;
    Int_t           firstbx2;
    Int_t           bxspread1;
    Int_t           bxspread2;
    Int_t           stationspread1;
    Int_t           stationspread2;
+   Int_t           ngen;
    Short_t         nstub1;
    Short_t         nstub2;
    Float_t         pt1;
