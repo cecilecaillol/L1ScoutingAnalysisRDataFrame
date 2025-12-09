@@ -21,9 +21,11 @@ weight=1.0
 
 if ("Scouting" not in input_file):
     isdata=False
-    df = RDataFrame("Events","/eos/cms/store/group/cmst3/group/slowmuons/DYgen/DY.root")
+    #df = RDataFrame("Events","/eos/cms/store/group/cmst3/group/slowmuons/DYgen/DY.root")
+    df = RDataFrame("Events",input_file)
     #weight=((6346.0*5440.0*(1.0/15.2))/df.Count().GetValue())
     weight=((6346.0)/df.Count().GetValue())
+    if "DYMM" in input_file: weight=((6346.0*0.3664)/df.Count().GetValue())
 else:
     df = RDataFrame("Events",input_file)
 
@@ -60,13 +62,18 @@ df = df_var.Filter("mmumu>50 && DRmumu>0.3").Define("xsweight","{}".format(weigh
 if isdata: 
    df = df.Define("is_colliding", "IsColliding(run,bunchCrossing)")
    df = df.Define("is_earlier_colliding", "IsEarlierColliding(run,bunchCrossing,1,is_colliding)")
+   df = df.Define("genbeta1","{}".format(weight)).Define("genpt1","{}".format(weight)) \
+          .Define("genbeta2","{}".format(weight)).Define("genpt2","{}".format(weight)) 
 else:
    df = df.Define("is_colliding", "true").Define("is_earlier_colliding", "true")
+   df = df.Define("genbeta1","Get_genbeta(my_mu1.Eta(), my_mu1.Phi(), nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_beta)").Define("genpt1","Get_genbeta(my_mu1.Eta(), my_mu1.Phi(), nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_pt)") \
+          .Define("genbeta2","Get_genbeta(my_mu2.Eta(), my_mu2.Phi(), nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_beta)") \
+          .Define("genpt2","Get_genbeta(my_mu2.Eta(), my_mu2.Phi(), nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_pt)")
 
 columns = ROOT.std.vector("string")()
 for c in ("run", "luminosityBlock", "bunchCrossing", "orbitNumber", "xsweight", "is_colliding", "is_earlier_colliding", \
         "pt1","eta1","phi1","charge1","qual1","dxy1","pt2","eta2","phi2","charge2","qual2","dxy2", \
-        "mmumu", "isOS", "DRmumu"):
+        "genbeta1","genpt1","genbeta2","genpt2","mmumu", "isOS", "DRmumu"):
     columns.push_back(c)
 
 df.Snapshot("Events",output_file,columns)

@@ -45,12 +45,18 @@ int GetIndex(int rank, int ncand, ROOT::VecOps::RVec<Float_t> &LepCand_pt, ROOT:
 	      int tmp_bxspread=GetBxSpread(ncand, k, nstub, bx1, bx2, bx3, bx4);
 	      int tmp_nstubs=nstub[k];
 	      int tmp_pt=Get_newpt(LepCand_hwK[k]);
-	      if (tmp_bxspread>best_bxspread or (tmp_bxspread==best_bxspread and tmp_nstubs>best_nstubs) or (tmp_bxspread==best_bxspread and tmp_nstubs==best_nstubs and tmp_pt>best_pt)){
+	      if (tmp_bxspread>best_bxspread or (tmp_bxspread==best_bxspread and tmp_nstubs>best_nstubs) or (tmp_bxspread==best_bxspread and tmp_nstubs==best_nstubs and tmp_pt>best_pt)){ // prefer slowest
 	         idxK1=k;
 		 best_bxspread=tmp_bxspread;
 		 best_nstubs=tmp_nstubs;
 		 best_pt=tmp_pt;
 	      }
+	      /*if (tmp_nstubs>best_nstubs or (tmp_nstubs==best_nstubs and tmp_bxspread>best_bxspread) or (tmp_bxspread==best_bxspread and tmp_nstubs==best_nstubs and tmp_pt>best_pt)){// prefer highest nstub
+                 idxK1=k;
+                 best_bxspread=tmp_bxspread;
+                 best_nstubs=tmp_nstubs;
+                 best_pt=tmp_pt;
+              }*/
 	   }
 	   TLorentzVector my_mu1; my_mu1.SetPtEtaPhiM(Get_newpt(LepCand_hwK[idxK1]), LepCand_eta[idxK1], LepCand_phi[idxK1],0.105);
 
@@ -64,12 +70,18 @@ int GetIndex(int rank, int ncand, ROOT::VecOps::RVec<Float_t> &LepCand_pt, ROOT:
                  int tmp_bxspread=GetBxSpread(ncand, k, nstub, bx1, bx2, bx3, bx4);
                  int tmp_nstubs=nstub[k];
                  int tmp_pt=Get_newpt(LepCand_hwK[k]);
-                 if (tmp_bxspread>best_bxspread or (tmp_bxspread==best_bxspread and tmp_nstubs>best_nstubs) or (tmp_bxspread==best_bxspread and tmp_nstubs==best_nstubs and tmp_pt>best_pt)){
+                 if (tmp_bxspread>best_bxspread or (tmp_bxspread==best_bxspread and tmp_nstubs>best_nstubs) or (tmp_bxspread==best_bxspread and tmp_nstubs==best_nstubs and tmp_pt>best_pt)){ // prefer slowest
                     idxK2=k;
                     best_bxspread=tmp_bxspread;
                     best_nstubs=tmp_nstubs;
                     best_pt=tmp_pt;
                  }
+		 /*if (tmp_nstubs>best_nstubs or (tmp_bxspread>best_bxspread and tmp_nstubs==best_nstubs) or (tmp_bxspread==best_bxspread and tmp_nstubs==best_nstubs and tmp_pt>best_pt)){ // prefer highest nstub
+                    idxK2=k;
+                    best_bxspread=tmp_bxspread;
+                    best_nstubs=tmp_nstubs;
+                    best_pt=tmp_pt;
+                 }*/
               }
 	   }
 	}
@@ -359,5 +371,47 @@ float Get_newpt(int oldK){
     pt = 8;
 
   return pt/2;
+}
+
+float Get_genbeta(float eta, float phi, int ngen, ROOT::VecOps::RVec<Float_t> &Gen_eta, ROOT::VecOps::RVec<Float_t> &Gen_phi, ROOT::VecOps::RVec<Short_t> &Gen_pdgid, ROOT::VecOps::RVec<Float_t> &Gen_beta){
+    float out_beta = -1.0;
+    TLorentzVector my_reco;
+    my_reco.SetPtEtaPhiM(100.0, eta, phi, 1.0);
+    for (int i = 0; i<ngen; ++i){
+       if (fabs(Gen_pdgid[i])==13 or fabs(Gen_pdgid[i])==17 or fabs(Gen_pdgid[i])==16975 or fabs(Gen_pdgid[i])==1000015 or (fabs(Gen_pdgid[i])>=1000993 and fabs(Gen_pdgid[i])<=1093334)){
+          TLorentzVector tmp_gen;
+          tmp_gen.SetPtEtaPhiM(100.0, Gen_eta[i], Gen_phi[i], 1.0);
+          if (tmp_gen.DeltaR(my_reco)<0.3) out_beta = Gen_beta[i];
+       }
+    }
+    return out_beta;
+}
+
+float Get_genpt(float eta, float phi, int ngen, ROOT::VecOps::RVec<Float_t> &Gen_eta, ROOT::VecOps::RVec<Float_t> &Gen_phi, ROOT::VecOps::RVec<Short_t> &Gen_pdgid, ROOT::VecOps::RVec<Float_t> &Gen_pt){
+    float out_pt = -1.0;
+    TLorentzVector my_reco;
+    my_reco.SetPtEtaPhiM(100.0, eta, phi, 1.0);
+    for (int i = 0; i<ngen; ++i){
+       if (fabs(Gen_pdgid[i])==13 or fabs(Gen_pdgid[i])==17 or fabs(Gen_pdgid[i])==16975 or fabs(Gen_pdgid[i])==1000015 or (fabs(Gen_pdgid[i])>=1000993 and fabs(Gen_pdgid[i])<=1093334)){
+          TLorentzVector tmp_gen;
+          tmp_gen.SetPtEtaPhiM(100.0, Gen_eta[i], Gen_phi[i], 1.0);
+          if (tmp_gen.DeltaR(my_reco)<0.3) out_pt = Gen_pt[i];
+       }
+    }
+    return out_pt;
+}
+
+float Get_geneta(float eta, float phi, int ngen, ROOT::VecOps::RVec<Float_t> &Gen_eta, ROOT::VecOps::RVec<Float_t> &Gen_phi, ROOT::VecOps::RVec<Short_t> &Gen_pdgid){
+    float out_eta = -2.0;
+    TLorentzVector my_reco;
+    my_reco.SetPtEtaPhiM(100.0, eta, phi, 1.0);
+    for (int i = 0; i<ngen; ++i){
+       if (fabs(Gen_pdgid[i])==13 or fabs(Gen_pdgid[i])==17 or fabs(Gen_pdgid[i])==16975 or fabs(Gen_pdgid[i])==1000015 or (fabs(Gen_pdgid[i])>=1000993 and fabs(Gen_pdgid[i])<=1093334)){
+          TLorentzVector tmp_gen;
+          tmp_gen.SetPtEtaPhiM(100.0, Gen_eta[i], Gen_phi[i], 1.0);
+          if (tmp_gen.DeltaR(my_reco)<0.3) out_eta = Gen_eta[i];
+       }
+    }
+    return out_eta;
 }
 

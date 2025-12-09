@@ -86,16 +86,19 @@ adapt=ROOT.gROOT.GetColor(12)
 new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
 trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",0.5)
 
-categories=["stub4_bx1234", "stub4_bx1234_fail","stub3_bx123_slow", "stub3_bx123_slow_fail","stub3_bx123_fast", "stub3_bx123_fast_fail","stub4_bx123", "stub4_bx123_fail","stub3_bx124_slow", "stub3_bx124_slow_fail","stub3_bx124_fast", "stub3_bx124_fast_fail","stub4_bx1245", "stub4_bx1245_fail","stub4_bx1122", "stub4_bx1122_fail","stub4_bx1112", "stub4_bx1112_fail","stub4_bx1222", "stub4_bx1222_fail","stub3_bx112_slow", "stub3_bx112_slow_fail","stub3_bx112_fast", "stub3_bx112_fast_fail","stub3_bx122_slow", "stub3_bx122_slow_fail","stub3_bx122_fast", "stub3_bx122_fast_fail","stub2_bx12", "stub2_bx12_fail","stub2_bx12_station12", "stub2_bx12_station12_fail","stub4_bx124", "stub4_bx124_fail","stub2bx12_metm1","stub2bx12_metm2","stub2bx12_metm3","stub2bx12_metm4","samebx_metm1","samebx_metm2","samebx_metm3","samebx_metm4"]
-name=["stub4_bx1234", "stub4_bx1234_fail","stub3_bx123_slow", "stub3_bx123_slow_fail","stub3_bx123_fast", "stub3_bx123_fast_fail","stub4_bx123", "stub4_bx123_fail","stub3_bx124_slow", "stub3_bx124_slow_fail","stub3_bx124_fast", "stub3_bx124_fast_fail", "stub4_bx1245", "stub4_bx1245_fail","stub4_bx1122", "stub4_bx1122_fail","stub4_bx1112", "stub4_bx1112_fail","stub4_bx1222", "stub4_bx1222_fail","stub3_bx112_slow", "stub3_bx112_slow_fail","stub3_bx112_fast", "stub3_bx112_fast_fail","stub3_bx122_slow", "stub3_bx122_slow_fail","stub3_bx122_fast", "stub3_bx122_fast_fail","stub2_bx12", "stub2_bx12_fail","stub2_bx12_station12", "stub2_bx12_station12_fail","stub4_bx124", "stub4_bx124_fail","stub2bx12_metm1","stub2bx12_metm2","stub2bx12_metm3","stub2bx12_metm4","samebx_metm1","samebx_metm2","samebx_metm3","samebx_metm4"]
-title=["p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)", "p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","MET (GeV)", "MET (GeV)", "MET (GeV)", "MET (GeV)","MET (GeV)", "MET (GeV)", "MET (GeV)", "MET (GeV)"]
+categories=["stub4_bx1234", "stub4_bx1234_fail","stub3_bx123_slow", "stub3_bx123_slow_fail","stub3_bx123_fast", "stub3_bx123_fast_fail","stub4_bx123", "stub4_bx123_fail","stub3_bx124_slow", "stub3_bx124_slow_fail","stub3_bx124_fast", "stub3_bx124_fast_fail","stub4_bx1122", "stub4_bx1122_fail","stub4_bx1112", "stub4_bx1112_fail","stub4_bx1222", "stub4_bx1222_fail","stub3_bx112_slow", "stub3_bx112_slow_fail","stub3_bx112_fast", "stub3_bx112_fast_fail","stub3_bx122_slow", "stub3_bx122_slow_fail","stub3_bx122_fast", "stub3_bx122_fast_fail","stub4_bx124", "stub4_bx124_fail",
+        "stub4_bx1222_2tracks", "stub4_bx1222_2tracks_fail","stub4_bx1122_2tracks", "stub4_bx1122_2tracks_fail","stub4_bx1112_2tracks", "stub4_bx1112_2tracks_fail",
+        "stub3_bx112_slow_2tracks", "stub3_bx112_slow_2tracks_fail","stub3_bx112_fast_2tracks", "stub3_bx112_fast_2tracks_fail","stub3_bx122_slow_2tracks", "stub3_bx122_slow_2tracks_fail","stub3_bx122_fast_2tracks", "stub3_bx122_fast_2tracks_fail"]
+name=["stub4_bx1234", "stub4_bx1234_fail","stub3_bx123_slow", "stub3_bx123_slow_fail","stub3_bx123_fast", "stub3_bx123_fast_fail","stub4_bx123", "stub4_bx123_fail","stub3_bx124_slow", "stub3_bx124_slow_fail","stub3_bx124_fast", "stub3_bx124_fast_fail", "stub4_bx1122", "stub4_bx1122_fail","stub4_bx1112", "stub4_bx1112_fail","stub4_bx1222", "stub4_bx1222_fail","stub3_bx112_slow", "stub3_bx112_slow_fail","stub3_bx112_fast", "stub3_bx112_fast_fail","stub3_bx122_slow", "stub3_bx122_slow_fail","stub3_bx122_fast", "stub3_bx122_fast_fail","stub4_bx124", "stub4_bx124_fail",
+        "stub4_bx1222_2tracks", "stub4_bx1222_2tracks_fail","stub4_bx1122_2tracks", "stub4_bx1122_2tracks_fail","stub4_bx1112_2tracks", "stub4_bx1112_2tracks_fail",
+        "stub3_bx112_slow_2tracks", "stub3_bx112_slow_2tracks_fail","stub3_bx112_fast_2tracks", "stub3_bx112_fast_2tracks_fail","stub3_bx122_slow_2tracks", "stub3_bx122_slow_2tracks_fail","stub3_bx122_fast_2tracks", "stub3_bx122_fast_2tracks_fail"]
+title=["p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)", "p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)", "p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)","p_{T} (GeV)"]
 ncat=len(name)
 
 for i in range (0,ncat):
    print(categories[i])
    Data=file.Get(categories[i]).Get("data_obs")
    Fake=file.Get(categories[i]).Get("Fake")
-   Signal = file.Get(categories[i]).Get("Jian")
    HSCP3000 = file.Get(categories[i]).Get("HSCP3000")
    HSCP4500 = file.Get(categories[i]).Get("HSCP4500")
    HSCP6000 = file.Get(categories[i]).Get("HSCP6000")
@@ -129,8 +132,6 @@ for i in range (0,ncat):
    Fake.SetLineColor(1)
    Data.SetLineColor(1)
    Data.SetLineWidth(2)
-   Signal.SetLineColor(2)
-   Signal.SetLineWidth(5)
    HSCP3000.SetLineColor(ROOT.TColor.GetColor("#f89c20"))
    HSCP3000.SetLineWidth(5)
    HSCP4500.SetLineColor(ROOT.TColor.GetColor("#964a8b"))
@@ -173,7 +174,6 @@ for i in range (0,ncat):
    stack.Draw("histsame")
    errorBand.Draw("e2same")
    Data.Draw("esame")
-   #Signal.Draw("histsame")
    if not isVR: 
        HSCP3000.Draw("histsame")
        HSCP4500.Draw("histsame")
@@ -184,7 +184,6 @@ for i in range (0,ncat):
       legende=make_legend2()
    legende.AddEntry(Data,"Observed","elp")
    legende.AddEntry(Fake,"Background","f")
-   #legende.AddEntry(Signal,"Signal","l")
    if not isVR:
       legende.AddEntry(HSCP3000,"m = 3 TeV","l")
       legende.AddEntry(HSCP4500,"m = 4.5 TeV","l")

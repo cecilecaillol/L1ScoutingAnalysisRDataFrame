@@ -215,9 +215,12 @@ for k in range(0,len(dirOS)):
    h1.SetMinimum(0.2)
    h1.SetMarkerStyle(20)
    h3=errorBand.Clone()
+   h1.Add(Fake,-1)
+   h3.Add(Fake,-1)
    hwoE=errorBand.Clone()
+   hwoE.Add(Fake,-1)
    for iii in range (1,hwoE.GetSize()-1):
-     hwoE.SetBinError(iii,0)
+     h1.SetBinError(iii,0)
    #h3.Sumw2()
    #h1.Sumw2()
    h1.SetStats(0)
@@ -226,7 +229,8 @@ for k in range(0,len(dirOS)):
    h1.GetXaxis().SetTitle(xaxis[k])
    h1.GetXaxis().SetLabelSize(0.08)
    h1.GetYaxis().SetLabelSize(0.08)
-   h1.GetYaxis().SetTitle("Obs./Exp.")
+   h1.GetYaxis().SetTitle("(Obs - Fake)/DY")
+   h1.GetYaxis().SetTitleSize(0.05)
    h1.GetXaxis().SetNdivisions(505)#was 505
    h1.GetYaxis().SetNdivisions(5)
    
@@ -238,10 +242,13 @@ for k in range(0,len(dirOS)):
    h1.GetYaxis().SetLabelSize(0.11)
    h1.GetXaxis().SetTitleFont(42)
    h1.GetYaxis().SetTitleFont(42)
+   h1.SetMaximum(2.0)
+   h1.SetMinimum(0.5)
+   h1.Fit("pol1")
    
    h1.Draw("e0p")
-   h3.Draw("e2same")
-   h1.Draw("e0psame")
+   #h3.Draw("e2same")
+   #h1.Draw("e0psame")
    
    ROOT.gPad.RedrawAxis()
    c.cd()

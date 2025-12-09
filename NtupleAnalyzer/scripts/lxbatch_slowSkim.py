@@ -1,8 +1,18 @@
 import os
 
 # Define input and output directories
-input_dir = "/eos/cms/store/group/cmst3/group/slowmuons/Mu8Skim/L1Scouting"
-output_dir = "/eos/cms/store/group/cmst3/group/slowmuons/SlowSkims"
+##2024 EXO-25-010
+#input_dir = "/eos/cms/store/group/cmst3/group/slowmuons/Mu8Skim/L1Scouting"
+#output_dir = "/eos/cms/store/group/cmst3/group/slowmuons/SlowSkims"
+
+##2025 Selection stream
+input_dir = "/eos/cms/store/group/cmst3/group/slowmuons/Mu14Skim_2025SelectionStream/L1ScoutingSelection"
+output_dir = "/eos/cms/store/group/cmst3/group/slowmuons/SlowSkims2025"
+
+##2025 ZeroBias stream
+#input_dir = "/eos/cms/store/group/cmst3/group/slowmuons/Mu14Skim_2025ZeroBias/L1Scouting"
+#output_dir = "/eos/cms/store/group/cmst3/group/slowmuons/SlowSkims2025"
+
 exe_script = "/afs/cern.ch/work/c/ccaillol/L1ScoutingAnalysisRDataFrame/CMSSW_14_0_12/src/L1ScoutingAnalysisRDataFrame/NtupleAnalyzer/scripts/FinalSelection_SlowData.py"
 
 # Ensure output and logs directory exist

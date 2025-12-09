@@ -7,10 +7,14 @@ ROOT.gStyle.SetPadTickY(1)
 
 # Canvas
 c = ROOT.TCanvas("c", "CMS DT Structure", 600, 669)
-c.SetGrid()
+#c.SetGrid()
 
 # Frame
 frame = ROOT.TH2F("frame", ";z (m);R (m)", 100, 0, 7.0, 100, 0, 8)
+frame.GetXaxis().SetTitleSize(0.06)
+frame.GetYaxis().SetTitleSize(0.06)
+frame.GetXaxis().SetTitleOffset(0.7)
+frame.GetYaxis().SetTitleOffset(0.7)
 frame.Draw()
 
 # Data
@@ -52,7 +56,7 @@ for i, z_center in enumerate(wheel_z):
         if i==3: 
            label = ROOT.TLatex(z_center, (r1 + r2)/2, mb_labels[j])
            label.SetTextAlign(22)
-           label.SetTextSize(0.028)
+           label.SetTextSize(0.038)
            label.Draw()
            drawn_objects.append(label)
 
@@ -60,7 +64,7 @@ for i, z_center in enumerate(wheel_z):
     if (abs(z_center)<0.4): z_center=0.7
     wheel_label = ROOT.TLatex(z_center, r2 + 1.4, wheel_names[i])
     wheel_label.SetTextAlign(22)
-    wheel_label.SetTextSize(0.03)
+    wheel_label.SetTextSize(0.038)
     wheel_label.SetTextColor(ROOT.kBlack)
     wheel_label.Draw()
     drawn_objects.append(wheel_label)
@@ -102,7 +106,7 @@ for eta in eta_values:
     else:
         x_eta=7.1
     eta_label = ROOT.TLatex(x_eta, y_eta, f"#eta={eta}")
-    eta_label.SetTextSize(0.028)
+    eta_label.SetTextSize(0.038)
     eta_label.SetTextColor(ROOT.kGray + 2)
     eta_label.Draw()
     drawn_objects.append(eta_label)
@@ -115,3 +119,4 @@ legend.Draw("same")
 # Final update
 c.Update()
 c.SaveAs("MB.png")
+c.SaveAs("MB.pdf")

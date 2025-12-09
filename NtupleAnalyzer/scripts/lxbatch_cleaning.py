@@ -1,8 +1,11 @@
 import os
 
 # Define input and output directories
-input_dir = "/eos/cms/store/group/cmst3/group/slowmuons/SlowSkims"
-output_dir = "/eos/cms/store/group/cmst3/group/slowmuons/Cleaned_SlowSkims"
+#input_dir = "/eos/cms/store/group/cmst3/group/slowmuons/SlowSkims"
+#output_dir = "/eos/cms/store/group/cmst3/group/slowmuons/Cleaned_SlowSkims"
+
+input_dir = "/eos/cms/store/group/cmst3/group/slowmuons/SlowSkims2025"
+output_dir = "/eos/cms/store/group/cmst3/group/slowmuons/Cleaned_SlowSkims2025"
 
 # Ensure output and logs directory exist
 os.makedirs(output_dir, exist_ok=True)

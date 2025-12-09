@@ -1,7 +1,7 @@
 import ROOT
 import os
 
-is_mu=0 
+is_mu=1
 
 # Avoid showing GUI windows
 ROOT.gROOT.SetBatch(True)

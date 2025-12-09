@@ -23,12 +23,14 @@ weight=1.0
 if ("Scouting" not in input_file):
     isdata=False
     #df = RDataFrame("Events","/afs/cern.ch/work/c/ccaillol/KBMTFemulation/CMSSW_14_0_12/src/L1TriggerScouting/Utilities/python/DY_nano.root".format(sample))
-    df = RDataFrame("Events","/eos/cms/store/group/cmst3/group/slowmuons/DYgen/DY.root")
+    #df = RDataFrame("Events","/eos/cms/store/group/cmst3/group/slowmuons/DYgen/DY.root")
+    df = RDataFrame("Events",input_file)
     #ngen = rdf2.Sum("genEventCount").GetValue()
     #ngen = rdf2.Sum("genEventSumw").GetValue()
     #weight=((6346.0*(1.0/3)*5440.0*(1.0/25)*(553.0/1000))/df.Count().GetValue())
     #weight=((6346.0*5440.0*(1.0/15.2))/df.Count().GetValue())
     weight=(6346.0/df.Count().GetValue())
+    if "DYMM" in input_file: weight=((6346.0*0.3664)/df.Count().GetValue())
 else:
     #df = RDataFrame("Events","/eos/cms/store/group/cmst3/user/ccaillol/L1Scouting/Mu8Skim/L1Scouting/{}.root".format(sample))
     #df = RDataFrame("Events","/eos/cms/store/group/cmst3/group/slowmuons/Mu8Skim/L1Scouting/{}.root".format(sample))
@@ -63,6 +65,10 @@ df = df.Define("bxspread1", "GetBxSpread(nL1KBMTFSkimmed, idx1, L1KBMTFSkimmed_n
         .Define("nstub2", "GetNstub(nL1KBMTFSkimmed, idx2, L1KBMTFSkimmed_nStub)")\
         .Define("pt1","my_mu1.Pt()").Define("eta1","my_mu1.Eta()").Define("phi1","my_mu1.Phi()") \
         .Define("charge1","L1KBMTFSkimmed_hwCharge[idx1]").Define("qual1","L1KBMTFSkimmed_hwQual[idx1]") \
+        .Define("stub1Bx1","L1KBMTFSkimmed_s1Bx[idx1]").Define("stub2Bx1","L1KBMTFSkimmed_s2Bx[idx1]").Define("stub3Bx1","L1KBMTFSkimmed_s3Bx[idx1]").Define("stub4Bx1","L1KBMTFSkimmed_s4Bx[idx1]") \
+        .Define("stub1Station1","L1KBMTFSkimmed_s1Station[idx1]").Define("stub2Station1","L1KBMTFSkimmed_s2Station[idx1]").Define("stub3Station1","L1KBMTFSkimmed_s3Station[idx1]").Define("stub4Station1","L1KBMTFSkimmed_s4Station[idx1]") \
+        .Define("stub1Bx2","L1KBMTFSkimmed_s1Bx[idx2]").Define("stub2Bx2","L1KBMTFSkimmed_s2Bx[idx2]").Define("stub3Bx2","L1KBMTFSkimmed_s3Bx[idx2]").Define("stub4Bx2","L1KBMTFSkimmed_s4Bx[idx2]") \
+        .Define("stub1Station2","L1KBMTFSkimmed_s1Station[idx2]").Define("stub2Station2","L1KBMTFSkimmed_s2Station[idx2]").Define("stub3Station2","L1KBMTFSkimmed_s3Station[idx2]").Define("stub4Station2","L1KBMTFSkimmed_s4Station[idx2]") \
         .Define("dxy1","L1KBMTFSkimmed_hwDXY[idx1]") \
         .Define("pt2","my_mu2.Pt()").Define("eta2","my_mu2.Eta()").Define("phi2","my_mu2.Phi()") \
         .Define("charge2","L1KBMTFSkimmed_hwCharge[idx2]").Define("qual2","L1KBMTFSkimmed_hwQual[idx2]") \
@@ -76,15 +82,26 @@ else:
 if isdata:
    df = df.Define("is_colliding", "IsColliding(run,bunchCrossing)")
    df = df.Define("is_earlier_colliding", "IsEarlierColliding(run,bunchCrossing,1,is_colliding)")
+   df = df.Define("genbeta1","{}".format(weight)) \
+          .Define("genpt1","{}".format(weight)) \
+          .Define("genbeta2","{}".format(weight)) \
+          .Define("genpt2","{}".format(weight))
+
 else:
    df = df.Define("is_colliding", "true").Define("is_earlier_colliding", "true")
-
+   df = df.Define("genbeta1","Get_genbeta(my_mu1.Eta(), my_mu1.Phi(), nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_beta)") \
+          .Define("genpt1","Get_genbeta(my_mu1.Eta(), my_mu1.Phi(), nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_pt)") \
+          .Define("genbeta2","Get_genbeta(my_mu2.Eta(), my_mu2.Phi(), nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_beta)") \
+          .Define("genpt2","Get_genbeta(my_mu2.Eta(), my_mu2.Phi(), nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_pt)")
 
 
 columns = ROOT.std.vector("string")()
 for c in ("run", "luminosityBlock", "bunchCrossing", "orbitNumber", \
         "mmumu", "isOS", "DRmumu", "xsweight", "met", "is_colliding", "is_earlier_colliding", \
         "bxspread1", "bxspread2", "isL1MuMatched1", "isL1MuMatched2", "nstub1", "nstub2",\
+        "genbeta1","genpt1","genbeta2","genpt2", \
+        "stub1Bx1", "stub2Bx1", "stub3Bx1", "stub4Bx1", "stub1Bx2", "stub2Bx2", "stub3Bx2", "stub4Bx2", \
+        "stub1Station1", "stub2Station1", "stub3Station1", "stub4Station1", "stub1Station2", "stub2Station2", "stub3Station2", "stub4Station2", \
         "pt1","eta1","phi1","charge1","qual1","dxy1","pt2","eta2","phi2","charge2","qual2","dxy2"):
     columns.push_back(c)
 

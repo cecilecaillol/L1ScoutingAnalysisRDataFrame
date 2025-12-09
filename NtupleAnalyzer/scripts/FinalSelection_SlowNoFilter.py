@@ -67,7 +67,14 @@ df = df.Define("bxspread1", "GetBxSpread(nL1KBMTFSkimmed, idx1, L1KBMTFSkimmed_n
        .Define("phi1","L1KBMTFSkimmed_phi[idx1]").Define("phi2","L1KBMTFSkimmed_phi[idx2]") \
        .Define("dxy1","L1KBMTFSkimmed_hwDXY[idx1]").Define("dxy2","L1KBMTFSkimmed_hwDXY[idx2]") \
        .Define("qual1","L1KBMTFSkimmed_hwQual[idx1]").Define("qual2","L1KBMTFSkimmed_hwQual[idx2]") \
-       .Define("charge1","L1KBMTFSkimmed_hwCharge[idx1]").Define("charge2","L1KBMTFSkimmed_hwCharge[idx2]").Define("ngen","{}".format(nentries)) 
+       .Define("charge1","L1KBMTFSkimmed_hwCharge[idx1]").Define("charge2","L1KBMTFSkimmed_hwCharge[idx2]").Define("ngen","{}".format(nentries)) \
+       .Define("genbeta1","Get_genbeta(eta1, phi1, nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_beta)") \
+       .Define("genpt1","Get_genbeta(eta1, phi1, nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_pt)") \
+       .Define("geneta1","Get_geneta(eta1, phi1, nGen, Gen_eta, Gen_phi, Gen_pdgid)") \
+       .Define("genbeta2","Get_genbeta(eta2, phi2, nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_beta)") \
+       .Define("genpt2","Get_genbeta(eta2, phi2, nGen, Gen_eta, Gen_phi, Gen_pdgid, Gen_pt)") \
+       .Define("geneta2","Get_geneta(eta2, phi2, nGen, Gen_eta, Gen_phi, Gen_pdgid)")
+
 
 #df = df.Filter("(bxspread1>0 && nstub1>2) || (bxspread2>0 && nstub2>2)")
 
@@ -77,6 +84,7 @@ for c in ("run", "luminosityBlock", "bunchCrossing", "orbitNumber", "event", "ng
         "idx1", "idx2", \
         "bxspread1", "bxspread2", "stationspread1", "stationspread2", "nstub1", "nstub2", "isL1MuMatched1", "isL1MuMatched2", \
         "firstbx1","firstbx2", "pt1", "pt2", "eta1", "eta2", "phi1", "phi2", "dxy1", "dxy2", "qual1", "qual2", "charge1", "charge2", \
+        "genbeta1","genpt1","genbeta2","genpt2", "geneta1", "geneta2",\
         "L1MET_pt"):
         #"L1KBMTFSkimmed_hwDXY", "L1KBMTFSkimmed_nStub", "L1KBMTFSkimmed_pt", \
         #"L1KBMTFSkimmed_s1Station", "L1KBMTFSkimmed_s1Wheel", "L1KBMTFSkimmed_s1Sector", "L1KBMTFSkimmed_s1Bx", \

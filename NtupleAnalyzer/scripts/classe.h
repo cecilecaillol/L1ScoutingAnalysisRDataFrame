@@ -1,12 +1,12 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Tue Apr  8 10:45:27 2025 by ROOT version 6.30/03
+// Tue Jun 17 09:59:39 2025 by ROOT version 6.30/03
 // from TTree Events/Events
-// found on file: root://eoscms.cern.ch//eos/cms/store/cmst3/group/slowmuons/ZmumuKBMTFSkims/Scouting_2024G_part1.root
+// found on file: ZmumuKBMTF_DYMM.root
 //////////////////////////////////////////////////////////
 
-#ifndef zmumuclasse_h
-#define zmumuclasse_h
+#ifndef classe_h
+#define classe_h
 
 #include <TROOT.h>
 #include <TChain.h>
@@ -14,7 +14,7 @@
 
 // Header file for the classes stored in the TTree if any.
 
-class zmumuclasse {
+class classe {
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
@@ -31,12 +31,34 @@ public :
    Double_t        DRmumu;
    Double_t        xsweight;
    Float_t         met;
+   Bool_t          is_colliding;
+   Bool_t          is_earlier_colliding;
    Int_t           bxspread1;
    Int_t           bxspread2;
    Bool_t          isL1MuMatched1;
    Bool_t          isL1MuMatched2;
    Int_t           nstub1;
    Int_t           nstub2;
+   Float_t         genbeta1;
+   Float_t         genpt1;
+   Float_t         genbeta2;
+   Float_t         genpt2;
+   Short_t         stub1Bx1;
+   Short_t         stub2Bx1;
+   Short_t         stub3Bx1;
+   Short_t         stub4Bx1;
+   Short_t         stub1Bx2;
+   Short_t         stub2Bx2;
+   Short_t         stub3Bx2;
+   Short_t         stub4Bx2;
+   Short_t         stub1Station1;
+   Short_t         stub2Station1;
+   Short_t         stub3Station1;
+   Short_t         stub4Station1;
+   Short_t         stub1Station2;
+   Short_t         stub2Station2;
+   Short_t         stub3Station2;
+   Short_t         stub4Station2;
    Double_t        pt1;
    Double_t        eta1;
    Double_t        phi1;
@@ -60,12 +82,34 @@ public :
    TBranch        *b_DRmumu;   //!
    TBranch        *b_xsweight;   //!
    TBranch        *b_met;   //!
+   TBranch        *b_is_colliding;   //!
+   TBranch        *b_is_earlier_colliding;   //!
    TBranch        *b_bxspread1;   //!
    TBranch        *b_bxspread2;   //!
    TBranch        *b_isL1MuMatched1;   //!
    TBranch        *b_isL1MuMatched2;   //!
    TBranch        *b_nstub1;   //!
    TBranch        *b_nstub2;   //!
+   TBranch        *b_genbeta1;   //!
+   TBranch        *b_genpt1;   //!
+   TBranch        *b_genbeta2;   //!
+   TBranch        *b_genpt2;   //!
+   TBranch        *b_stub1Bx1;   //!
+   TBranch        *b_stub2Bx1;   //!
+   TBranch        *b_stub3Bx1;   //!
+   TBranch        *b_stub4Bx1;   //!
+   TBranch        *b_stub1Bx2;   //!
+   TBranch        *b_stub2Bx2;   //!
+   TBranch        *b_stub3Bx2;   //!
+   TBranch        *b_stub4Bx2;   //!
+   TBranch        *b_stub1Station1;   //!
+   TBranch        *b_stub2Station1;   //!
+   TBranch        *b_stub3Station1;   //!
+   TBranch        *b_stub4Station1;   //!
+   TBranch        *b_stub1Station2;   //!
+   TBranch        *b_stub2Station2;   //!
+   TBranch        *b_stub3Station2;   //!
+   TBranch        *b_stub4Station2;   //!
    TBranch        *b_pt1;   //!
    TBranch        *b_eta1;   //!
    TBranch        *b_phi1;   //!
@@ -79,8 +123,8 @@ public :
    TBranch        *b_qual2;   //!
    TBranch        *b_dxy2;   //!
 
-   zmumuclasse(TTree *tree=0);
-   virtual ~zmumuclasse();
+   classe(TTree *tree=0);
+   virtual ~classe();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
@@ -92,15 +136,15 @@ public :
 
 #endif
 
-#ifdef zmumuclasse_cxx
-zmumuclasse::zmumuclasse(TTree *tree) : fChain(0) 
+#ifdef classe_cxx
+classe::classe(TTree *tree) : fChain(0) 
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("root://eoscms.cern.ch//eos/cms/store/cmst3/group/slowmuons/ZmumuKBMTFSkims/Scouting_2024G_part1.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("ZmumuKBMTF_DYMM.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("root://eoscms.cern.ch//eos/cms/store/cmst3/group/slowmuons/ZmumuKBMTFSkims/Scouting_2024G_part1.root");
+         f = new TFile("ZmumuKBMTF_DYMM.root");
       }
       f->GetObject("Events",tree);
 
@@ -108,19 +152,19 @@ zmumuclasse::zmumuclasse(TTree *tree) : fChain(0)
    Init(tree);
 }
 
-zmumuclasse::~zmumuclasse()
+classe::~classe()
 {
    if (!fChain) return;
    delete fChain->GetCurrentFile();
 }
 
-Int_t zmumuclasse::GetEntry(Long64_t entry)
+Int_t classe::GetEntry(Long64_t entry)
 {
 // Read contents of entry.
    if (!fChain) return 0;
    return fChain->GetEntry(entry);
 }
-Long64_t zmumuclasse::LoadTree(Long64_t entry)
+Long64_t classe::LoadTree(Long64_t entry)
 {
 // Set the environment to read one entry
    if (!fChain) return -5;
@@ -133,7 +177,7 @@ Long64_t zmumuclasse::LoadTree(Long64_t entry)
    return centry;
 }
 
-void zmumuclasse::Init(TTree *tree)
+void classe::Init(TTree *tree)
 {
    // The Init() function is called when the selector needs to initialize
    // a new tree or chain. Typically here the branch addresses and branch
@@ -158,12 +202,34 @@ void zmumuclasse::Init(TTree *tree)
    fChain->SetBranchAddress("DRmumu", &DRmumu, &b_DRmumu);
    fChain->SetBranchAddress("xsweight", &xsweight, &b_xsweight);
    fChain->SetBranchAddress("met", &met, &b_met);
+   fChain->SetBranchAddress("is_colliding", &is_colliding, &b_is_colliding);
+   fChain->SetBranchAddress("is_earlier_colliding", &is_earlier_colliding, &b_is_earlier_colliding);
    fChain->SetBranchAddress("bxspread1", &bxspread1, &b_bxspread1);
    fChain->SetBranchAddress("bxspread2", &bxspread2, &b_bxspread2);
    fChain->SetBranchAddress("isL1MuMatched1", &isL1MuMatched1, &b_isL1MuMatched1);
    fChain->SetBranchAddress("isL1MuMatched2", &isL1MuMatched2, &b_isL1MuMatched2);
    fChain->SetBranchAddress("nstub1", &nstub1, &b_nstub1);
    fChain->SetBranchAddress("nstub2", &nstub2, &b_nstub2);
+   fChain->SetBranchAddress("genbeta1", &genbeta1, &b_genbeta1);
+   fChain->SetBranchAddress("genpt1", &genpt1, &b_genpt1);
+   fChain->SetBranchAddress("genbeta2", &genbeta2, &b_genbeta2);
+   fChain->SetBranchAddress("genpt2", &genpt2, &b_genpt2);
+   fChain->SetBranchAddress("stub1Bx1", &stub1Bx1, &b_stub1Bx1);
+   fChain->SetBranchAddress("stub2Bx1", &stub2Bx1, &b_stub2Bx1);
+   fChain->SetBranchAddress("stub3Bx1", &stub3Bx1, &b_stub3Bx1);
+   fChain->SetBranchAddress("stub4Bx1", &stub4Bx1, &b_stub4Bx1);
+   fChain->SetBranchAddress("stub1Bx2", &stub1Bx2, &b_stub1Bx2);
+   fChain->SetBranchAddress("stub2Bx2", &stub2Bx2, &b_stub2Bx2);
+   fChain->SetBranchAddress("stub3Bx2", &stub3Bx2, &b_stub3Bx2);
+   fChain->SetBranchAddress("stub4Bx2", &stub4Bx2, &b_stub4Bx2);
+   fChain->SetBranchAddress("stub1Station1", &stub1Station1, &b_stub1Station1);
+   fChain->SetBranchAddress("stub2Station1", &stub2Station1, &b_stub2Station1);
+   fChain->SetBranchAddress("stub3Station1", &stub3Station1, &b_stub3Station1);
+   fChain->SetBranchAddress("stub4Station1", &stub4Station1, &b_stub4Station1);
+   fChain->SetBranchAddress("stub1Station2", &stub1Station2, &b_stub1Station2);
+   fChain->SetBranchAddress("stub2Station2", &stub2Station2, &b_stub2Station2);
+   fChain->SetBranchAddress("stub3Station2", &stub3Station2, &b_stub3Station2);
+   fChain->SetBranchAddress("stub4Station2", &stub4Station2, &b_stub4Station2);
    fChain->SetBranchAddress("pt1", &pt1, &b_pt1);
    fChain->SetBranchAddress("eta1", &eta1, &b_eta1);
    fChain->SetBranchAddress("phi1", &phi1, &b_phi1);
@@ -179,7 +245,7 @@ void zmumuclasse::Init(TTree *tree)
    Notify();
 }
 
-Bool_t zmumuclasse::Notify()
+Bool_t classe::Notify()
 {
    // The Notify() function is called when a new file is opened. This
    // can be either for a new TTree in a TChain or when when a new TTree
@@ -190,18 +256,18 @@ Bool_t zmumuclasse::Notify()
    return kTRUE;
 }
 
-void zmumuclasse::Show(Long64_t entry)
+void classe::Show(Long64_t entry)
 {
 // Print contents of entry.
 // If entry is not specified, print current entry
    if (!fChain) return;
    fChain->Show(entry);
 }
-Int_t zmumuclasse::Cut(Long64_t entry)
+Int_t classe::Cut(Long64_t entry)
 {
 // This function may be called from Loop.
 // returns  1 if entry is accepted.
 // returns -1 otherwise.
    return 1;
 }
-#endif // #ifdef zmumuclasse_cxx
+#endif // #ifdef classe_cxx

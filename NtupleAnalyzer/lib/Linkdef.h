@@ -24,4 +24,7 @@
 #pragma link C++ function IsColliding;
 #pragma link C++ function IsEarlierColliding;
 #pragma link C++ function Get_newpt;
+#pragma link C++ function Get_genbeta;
+#pragma link C++ function Get_genpt;
+#pragma link C++ function Get_geneta;
 #endif

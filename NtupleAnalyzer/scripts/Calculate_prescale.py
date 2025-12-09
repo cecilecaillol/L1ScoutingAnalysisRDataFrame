@@ -3,8 +3,9 @@ import json
 
 # Define the dataset name
 #dataset = "/L1Scouting/Run2024H-v1/L1SCOUT"
-#dataset = "/L1Scouting/Run2024G-v1/L1SCOUT"
-dataset = "/L1Scouting/Run2024I-v1/L1SCOUT"
+dataset = "/L1Scouting/Run2024G-v1/L1SCOUT"
+#dataset = "/L1Scouting/Run2024I-v1/L1SCOUT"
+#dataset = "/L1Scouting/Run2025D-v1/L1SCOUT"
 
 # Step 1: Get the list of runs
 cmd_runs = f"dasgoclient -json -query='run dataset={dataset}'"

@@ -16,7 +16,8 @@ if not file or file.IsZombie():
     raise RuntimeError(f"Cannot open file: {input_file_path}")
 
 # === Loop through directories in the file ===
-for dirname in ["stub4_bx1234", "stub4_bx1234_fail","stub3_bx123_slow", "stub3_bx123_slow_fail","stub3_bx123_fast", "stub3_bx123_fast_fail","stub4_bx123", "stub4_bx123_fail","stub3_bx124_slow", "stub3_bx124_slow_fail","stub3_bx124_fast", "stub3_bx124_fast_fail","stub4_bx1245", "stub4_bx1245_fail","stub4_bx1122", "stub4_bx1122_fail","stub4_bx1112", "stub4_bx1112_fail","stub4_bx1222", "stub4_bx1222_fail","stub3_bx112_slow", "stub3_bx112_slow_fail","stub3_bx112_fast", "stub3_bx112_fast_fail","stub3_bx122_slow", "stub3_bx122_slow_fail","stub3_bx122_fast", "stub3_bx122_fast_fail","stub4_bx124", "stub4_bx124_fail"]:
+#for dirname in ["stub4_bx1234", "stub4_bx1234_fail","stub3_bx123_slow", "stub3_bx123_slow_fail","stub3_bx123_fast", "stub3_bx123_fast_fail","stub4_bx123", "stub4_bx123_fail","stub3_bx124_slow", "stub3_bx124_slow_fail","stub3_bx124_fast", "stub3_bx124_fast_fail","stub4_bx1122", "stub4_bx1122_fail","stub4_bx1112", "stub4_bx1112_fail","stub4_bx1222", "stub4_bx1222_fail","stub3_bx112_slow", "stub3_bx112_slow_fail","stub3_bx112_fast", "stub3_bx112_fast_fail","stub3_bx122_slow", "stub3_bx122_slow_fail","stub3_bx122_fast", "stub3_bx122_fast_fail","stub4_bx124", "stub4_bx124_fail"]:
+for dirname in ["stub4_bx1112","stub4_bx1122","stub4_bx1222","stub4_bx123","stub4_bx124","stub4_bx1234", "stub3_bx112_slow","stub3_bx112_fast","stub3_bx122_slow","stub3_bx122_fast", "stub3_bx123_slow","stub3_bx123_fast","stub3_bx124_slow","stub3_bx124_fast", "stub4_bx1112_2tracks","stub4_bx1122_2tracks","stub4_bx1222_2tracks",  "stub3_bx112_slow_2tracks","stub3_bx112_fast_2tracks","stub3_bx122_slow_2tracks","stub3_bx122_fast_2tracks"]:
     hist_names = [k.GetName() for k in file.Get(dirname).GetListOfKeys()]
     base_hist_name = "Fake"
     up_hist_name = next((name for name in hist_names if name.startswith("Fake") and name.endswith("Up")), None)
@@ -45,6 +46,7 @@ for dirname in ["stub4_bx1234", "stub4_bx1234_fail","stub3_bx123_slow", "stub3_b
     h_base.GetXaxis().SetTitle("p_{T} (GeV)")
     h_base.GetYaxis().SetTitle("Events")
     h_base.SetMaximum(1.5*h_base.GetMaximum())
+    h_base.SetMinimum(0.0)
     h_base.Draw("HIST")
     h_base.Draw("ESAME")
     h_up.Draw("HIST SAME")

@@ -82,7 +82,8 @@ df = df.Define("bxspread1", "GetBxSpread(nL1KBMTFSkimmed, idx1, L1KBMTFSkimmed_n
        #.Define("met_bxm8_1","L1KBMTFSkimmed_met_bxm8[idx1]").Define("met_bxm8_2","L1KBMTFSkimmed_met_bxm8[idx2]") \
        #.Define("met_bxm9_1","L1KBMTFSkimmed_met_bxm9[idx1]").Define("met_bxm9_2","L1KBMTFSkimmed_met_bxm9[idx2]")
 
-df = df.Filter("(bxspread1>0 or pt1>500) || (bxspread2>0 || pt2>500)")
+#df = df.Filter("(bxspread1>0 || pt1>500) || (bxspread2>0 || pt2>500)")
+df = df.Filter("(bxspread1>0 || bxspread2>0)")
 
 df = df.Define("is_colliding", "IsColliding(run,firstbx1)")
 
